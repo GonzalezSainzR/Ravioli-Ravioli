@@ -6,6 +6,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.FloatMath;
 import android.widget.TextView;
@@ -34,9 +35,13 @@ public class MainActivity extends Activity {
             double delta = currentAcceleration - previousAcceleration;
             acceleration = acceleration * 0.9f + delta;
 
-            if(acceleration > 15) {
-                Toast toast  = Toast.makeText(getApplication(), "Device has shaken", Toast.LENGTH_SHORT);
-                toast.show();
+            if (acceleration > 20) {
+                MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.sound);
+                mediaPlayer.start();
+
+                String ans = Predictions.get().getPrediction();
+
+                answerText.setText(ans);
             }
         }
 
@@ -62,6 +67,7 @@ public class MainActivity extends Activity {
         answerText.setText(Predictions.get().getPrediction());
     }
 
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -73,4 +79,8 @@ public class MainActivity extends Activity {
         super.onPause();
         sensorManager.unregisterListener(sensorListener);
     }
+
 }
+
+
+

@@ -35,7 +35,7 @@ public class MainActivity extends Activity {
             double delta = currentAcceleration - previousAcceleration;
             acceleration = acceleration * 0.9f + delta;
 
-            if (acceleration > 20) {
+            if (acceleration > 10) {
                 MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.sound);
                 mediaPlayer.start();
 
